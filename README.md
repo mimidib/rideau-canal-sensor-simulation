@@ -25,7 +25,15 @@ rideau-canal-sensor-simulation/
    - Main components explained
    - Key functions
 7. **Sensor Data Format**
-   - JSON schema
-   - Example output
+**Data Ranges for Ottawa Winter**:
+- Ice thickness (cm): Normally 25–45 cm. Safe ≥30, caution ≥25, unsafe <25.
+- Surface temperature (°C): Usually near external temp, but can be a few degrees colder. Safe ≤ -2°C, caution ≤ 0°C, unsafe >0°C.
+- Snow accumulation (cm): 0–30 cm, can increase gradually after a snow event.
+- External temperature (°C): -25°C to +5°C.
+
+**JSON schema:**
+
+**Example Output:**
+
 8. **Troubleshooting**
    - Common issues and fixes
