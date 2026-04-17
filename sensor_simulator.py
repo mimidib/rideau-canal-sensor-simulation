@@ -8,6 +8,7 @@ import time
 from datetime import datetime, timezone
 
 from azure.iot.device import IoTHubDeviceClient
+from azure.iot.device.exceptions import IoTHubError
 from dotenv import load_dotenv
 
 # ---- Config ----
@@ -85,16 +86,19 @@ def generate_sensor_data(location):
         "ice_thickness": ice_thickness,
         "snow_accumulation": snow_accumulation,
     }
-    return json.dumps(data)  # dump to a strong
+    return json.dumps(data)  # dumps to a JSON string
 
 
+# Step 3. in flow
 def send_to_iot_hub(client, data):
-    """Sends one event to IoT Hub, runs every 10 seconds"""
-
+    """Sends one event (dict) to IoT Hub, runs every 10 seconds"""
+    # this is used in a loop in main
     # 2. Send Data to IoT Hub with Simulate sensor data (Timestamp, Ice thickness, temprerature, snow accumulation & external temperature)
-
-    # 3. loop every 10 seconds to send simulated sensor data to IoT Hub
-    return
+    try:
+        client.send_message(data)
+        logging.info("Message successfully sent to IoT Hub: %s", data)
+    except Exception as e:
+        logging.error("Error sending message to IoT Hub: %s", e)
 
 
 # ---- Main ----
@@ -107,6 +111,8 @@ def main():
 
     logging.info("Creating IoT Hub Device Client...")
     client = IoTHubDeviceClient.create_from_connection_string(CONNECTION_STRING)
+    # connect client, not required, will stop script immediately if connection string invalid vs after 10s on first attempt
+    client.connect()
 
     try:
         while True:
