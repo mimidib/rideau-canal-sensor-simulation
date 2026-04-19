@@ -8,7 +8,6 @@ import time
 from datetime import datetime, timezone
 
 from azure.iot.device import IoTHubDeviceClient
-from azure.iot.device.exceptions import IoTHubError
 from dotenv import load_dotenv
 
 # ---- Config ----
